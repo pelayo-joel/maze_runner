@@ -8,10 +8,10 @@ public class UnionFind<T> {
     private final Map<T, T> components = new HashMap<>();
     private final Map<T, Integer> treeSizes = new HashMap<>();
 
-    public UnionFind(T[] components) {
-        for (T component : components) {
-            this.components.put(component, component);
-            this.treeSizes.put(component, 1);
+    public UnionFind(T[] elements) {
+        for (T component : elements) {
+            components.put(component, component);
+            treeSizes.put(component, 1);
         }
     }
 
@@ -29,24 +29,24 @@ public class UnionFind<T> {
         int leftTreeSize = getTreeSize(leftComponentTree);
         int rightTreeSize = getTreeSize(rightComponentTree);
         if (leftTreeSize < rightTreeSize) {
-            this.components.put(leftComponentTree, rightComponentTree);
-            this.treeSizes.put(rightComponentTree, leftTreeSize + rightTreeSize);
+            components.put(leftComponentTree, rightComponentTree);
+            treeSizes.put(rightComponentTree, leftTreeSize + rightTreeSize);
         } else {
-            this.components.put(rightComponentTree, leftComponentTree);
-            this.treeSizes.put(leftComponentTree, leftTreeSize + rightTreeSize);
+            components.put(rightComponentTree, leftComponentTree);
+            treeSizes.put(leftComponentTree, leftTreeSize + rightTreeSize);
         }
     }
 
     private T find(T component) {
-        while (!component.equals(this.components.get(component))) {
-            this.components.put(component, this.components.get(this.components.get(component))); // Path compression
-            component = this.components.get(component);
+        while (!component.equals(components.get(component))) {
+            components.put(component, components.get(components.get(component))); // Path compression
+            component = components.get(component);
         }
         return component;
     }
 
     private int getTreeSize(T component) {
-        return this.treeSizes.get(component);
+        return treeSizes.get(component);
     }
 
     public boolean areConnected(T leftComponent, T rightComponent) {
