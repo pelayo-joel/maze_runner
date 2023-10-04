@@ -12,12 +12,12 @@ import edu.laplateforme.models.maze_generators.utilities.*;
 
 public class SimpleImperfectMazeGenerator implements MazeGenerator {
     private List<Room> allRooms;
-    private Set<Room> rooms;
+    private Set<Room> resultRooms;
     private Room currentRoom;
 
     public SimpleImperfectMazeGenerator(List<Room> rooms) {
         this.allRooms = rooms;
-        this.rooms = new HashSet<Room>();
+        this.resultRooms = new HashSet<Room>();
     }
 
     
@@ -33,26 +33,21 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
 
             List<Room> visitedNeighbors = GetNeighborsDetails();
 
-            if (visitedNeighbors.size() != 0 && rand.nextInt(10) > 2) {
-                int randomNeighborIndex = rand.nextInt(visitedNeighbors.size());
+            if (!visitedNeighbors.isEmpty() && rand.nextInt(10) > 2) {
+                int randomNeighborIndex = visitedNeighbors.size() == 1 ? 0 : rand.nextInt(visitedNeighbors.size());
                 room.CreatePaths(visitedNeighbors.get(randomNeighborIndex));
             }
 
-            this.rooms.add(this.currentRoom);
+            this.resultRooms.add(this.currentRoom);
         }
-        return this.rooms;
+        return this.resultRooms;
     }
 
 
 
     @Override
     public boolean MazeNotDone() {
-        for (Room room : this.allRooms) {
-            if (!room.visited) {
-                return true;
-            }   
-        }
-        return false;
+        return this.allRooms.size() == this.resultRooms.size();
     }
 
     @Override

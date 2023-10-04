@@ -1,7 +1,6 @@
 package edu.laplateforme.models.maze_generators;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -12,7 +11,7 @@ import edu.laplateforme.models.maze_generators.utilities.*;
 public class OptimizedMazeGenerator implements MazeGenerator {
     private boolean isImperfect;
     private List<Room> allRooms;
-    private Set<Room> rooms;
+    private Set<Room> resultRooms;
     private Room currentRoom;
 
     public OptimizedMazeGenerator(List<Room> rooms, String complexity) {
@@ -32,7 +31,7 @@ public class OptimizedMazeGenerator implements MazeGenerator {
         while(MazeNotDone()) {
             
         }
-        return this.rooms;
+        return this.resultRooms;
     }
 
 

@@ -79,11 +79,11 @@ public class Maze {
     private void AlgoParser(String complexity, String algorithm) {
         switch (algorithm) {
             case "simple":
-                if (complexity.toLowerCase().equals("perfect")) {
+                if (complexity.equalsIgnoreCase("perfect")) {
                     SimplePerfectMazeGenerator perfectMazeGeneration = new SimplePerfectMazeGenerator(this.rooms);
                     this.treatedRooms = perfectMazeGeneration.MazeGeneration();
                 }
-                else if (complexity.toLowerCase().equals("imperfect")) {
+                else if (complexity.equalsIgnoreCase("imperfect")) {
                     SimpleImperfectMazeGenerator imperfectMazeGeneration = new SimpleImperfectMazeGenerator(this.rooms);
                     this.treatedRooms = imperfectMazeGeneration.MazeGeneration();
                 }
@@ -102,11 +102,11 @@ public class Maze {
         // try {
         //     switch (algorithm) {
         //             case "simple":
-        //                 if (complexity.toLowerCase().equals("perfect")) {
+        //                 if (complexity.equalsIgnoreCase().equals("perfect")) {
         //                     SimplePerfectMazeGenerator perfectMazeGeneration = new SimplePerfectMazeGenerator(this.rooms);
         //                     this.treatedRooms = perfectMazeGeneration.MazeGeneration();
         //                 }
-        //                 else if (complexity.toLowerCase().equals("imperfect")) {
+        //                 else if (complexity.equalsIgnoreCase().equals("imperfect")) {
         //                     SimpleImperfectMazeGenerator imperfectMazeGeneration = new SimpleImperfectMazeGenerator(this.rooms);
         //                     this.treatedRooms = imperfectMazeGeneration.MazeGeneration();
         //                 }

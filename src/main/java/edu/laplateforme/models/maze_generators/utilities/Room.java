@@ -46,7 +46,11 @@ public class Room {
     
     
     public void CreatePaths(Room nextRoom) {
+        //System.out.println("next roomId: " + nextRoom.GetId() + ", this id: " + this.GetId());
         for (Room neighbor : this.GetNeighbors()) {
+//            if (neighbor != null) {
+//                System.out.println("next roomId: " + nextRoom.GetId() + ", neighbor id: " + neighbor.GetId());
+//            }
             if (neighbor == nextRoom) {
                 this.SetPath(nextRoom);
             }
@@ -107,7 +111,9 @@ public class Room {
         }
         return neighbors;
     }
-    
+
+    public static int GetMazeWidth() { return xMax; }
+    public static int GetMazeHeight() { return yMax; }
     public int GetId() { return this.roomId; }
     public int GetX() { return this.x; }
     public int GetY() { return this.y; }
