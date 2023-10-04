@@ -40,7 +40,7 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
 
 
     @Override
-    public Set<Room> MazeGeneration() {
+    public Set<Room> MazeGeneration() throws Exception {
         while(!this.currentPath.isEmpty()) {
             this.currentRoom = this.currentPath.pop();
             System.out.println(this.resultRooms.size());

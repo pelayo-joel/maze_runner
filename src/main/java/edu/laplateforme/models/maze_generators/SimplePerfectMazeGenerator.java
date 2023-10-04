@@ -25,7 +25,7 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
     
 
     @Override
-    public Set<Room> MazeGeneration() {
+    public Set<Room> MazeGeneration()  throws Exception {
         boolean firstRow = true;
 
         for (Room room : this.allRooms) {

@@ -77,54 +77,56 @@ public class Maze {
 
 
     private void AlgoParser(String complexity, String algorithm) {
-        switch (algorithm) {
-            case "simple":
-                if (complexity.equalsIgnoreCase("perfect")) {
-                    SimplePerfectMazeGenerator perfectMazeGeneration = new SimplePerfectMazeGenerator(this.rooms);
-                    this.treatedRooms = perfectMazeGeneration.MazeGeneration();
-                }
-                else if (complexity.equalsIgnoreCase("imperfect")) {
-                    SimpleImperfectMazeGenerator imperfectMazeGeneration = new SimpleImperfectMazeGenerator(this.rooms);
-                    this.treatedRooms = imperfectMazeGeneration.MazeGeneration();
-                }
-                break;
-            case "graph":
-                GraphBasedMazeGenerator graphMazeGeneration = new GraphBasedMazeGenerator(this.rooms, complexity);
-                this.treatedRooms = graphMazeGeneration.MazeGeneration();
-                break;
-            case "optimized":
-                OptimizedMazeGenerator optimizedMazeGeneration = new OptimizedMazeGenerator(this.rooms, complexity);
-                this.treatedRooms = optimizedMazeGeneration.MazeGeneration();
-                break;
-            default:
-                break;
-            }
-        // try {
-        //     switch (algorithm) {
-        //             case "simple":
-        //                 if (complexity.equalsIgnoreCase().equals("perfect")) {
-        //                     SimplePerfectMazeGenerator perfectMazeGeneration = new SimplePerfectMazeGenerator(this.rooms);
-        //                     this.treatedRooms = perfectMazeGeneration.MazeGeneration();
-        //                 }
-        //                 else if (complexity.equalsIgnoreCase().equals("imperfect")) {
-        //                     SimpleImperfectMazeGenerator imperfectMazeGeneration = new SimpleImperfectMazeGenerator(this.rooms);
-        //                     this.treatedRooms = imperfectMazeGeneration.MazeGeneration();
-        //                 }
-        //                 break;
-        //             case "graph":
-        //                 GraphBasedMazeGenerator graphMazeGeneration = new GraphBasedMazeGenerator(this.rooms, complexity);
-        //                 this.treatedRooms = graphMazeGeneration.MazeGeneration();
-        //                 break;
-        //             case "optimized":
-        //                 OptimizedMazeGenerator optimizedMazeGeneration = new OptimizedMazeGenerator(this.rooms, complexity);
-        //                 this.treatedRooms = optimizedMazeGeneration.MazeGeneration();
-        //                 break;
-        //             default:
-        //                 break;
-        //             }
-        // } catch (Exception e) {
-        //     System.out.println("Erreur inattendue lors de la génération du labyrinthe. Veuillez réessayer.");
-        //     System.exit(2);
-        // }
+        //Test for no exception
+//        switch (algorithm) {
+//            case "simple":
+//                if (complexity.equalsIgnoreCase("perfect")) {
+//                    SimplePerfectMazeGenerator perfectMazeGeneration = new SimplePerfectMazeGenerator(this.rooms);
+//                    this.treatedRooms = perfectMazeGeneration.MazeGeneration();
+//                }
+//                else if (complexity.equalsIgnoreCase("imperfect")) {
+//                    SimpleImperfectMazeGenerator imperfectMazeGeneration = new SimpleImperfectMazeGenerator(this.rooms);
+//                    this.treatedRooms = imperfectMazeGeneration.MazeGeneration();
+//                }
+//                break;
+//            case "graph":
+//                GraphBasedMazeGenerator graphMazeGeneration = new GraphBasedMazeGenerator(this.rooms, complexity);
+//                this.treatedRooms = graphMazeGeneration.MazeGeneration();
+//                break;
+//            case "optimized":
+//                OptimizedMazeGenerator optimizedMazeGeneration = new OptimizedMazeGenerator(this.rooms, complexity);
+//                this.treatedRooms = optimizedMazeGeneration.MazeGeneration();
+//                break;
+//            default:
+//                break;
+//            }
+        //Final
+         try {
+             switch (algorithm) {
+                 case "simple":
+                     if (complexity.equalsIgnoreCase("perfect")) {
+                         SimplePerfectMazeGenerator perfectMazeGeneration = new SimplePerfectMazeGenerator(this.rooms);
+                         this.treatedRooms = perfectMazeGeneration.MazeGeneration();
+                     }
+                     else if (complexity.equalsIgnoreCase("imperfect")) {
+                         SimpleImperfectMazeGenerator imperfectMazeGeneration = new SimpleImperfectMazeGenerator(this.rooms);
+                         this.treatedRooms = imperfectMazeGeneration.MazeGeneration();
+                     }
+                     break;
+                 case "graph":
+                     GraphBasedMazeGenerator graphMazeGeneration = new GraphBasedMazeGenerator(this.rooms, complexity);
+                     this.treatedRooms = graphMazeGeneration.MazeGeneration();
+                     break;
+                 case "optimized":
+                     OptimizedMazeGenerator optimizedMazeGeneration = new OptimizedMazeGenerator(this.rooms, complexity);
+                     this.treatedRooms = optimizedMazeGeneration.MazeGeneration();
+                     break;
+                 default:
+                     break;
+                 }
+         } catch (Exception e) {
+             System.out.println("Erreur inattendue lors de la génération du labyrinthe. Veuillez réessayer.");
+             System.exit(2);
+         }
     }
 }

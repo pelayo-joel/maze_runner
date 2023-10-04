@@ -27,7 +27,7 @@ public class OptimizedMazeGenerator implements MazeGenerator {
     
 
     @Override
-    public Set<Room> MazeGeneration() {
+    public Set<Room> MazeGeneration() throws Exception {
         while(MazeNotDone()) {
             
         }
