@@ -11,5 +11,5 @@ public interface MazeGenerator {
 
     public boolean MazeNotDone();
     
-    public Set<Room> MazeGeneration() throws Exception;
+    public Set<Room> MazeGeneration();
 }

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
-import java.util.concurrent.TimeUnit;
 
 import edu.laplateforme.models.maze_generators.utilities.*;
 
@@ -40,11 +39,13 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
 
 
     @Override
-    public Set<Room> MazeGeneration() throws Exception {
+    public Set<Room> MazeGeneration() {
+        boolean deadEnd = false;
+
         while(!this.currentPath.isEmpty()) {
             this.currentRoom = this.currentPath.pop();
-            System.out.println(this.resultRooms.size());
             List<Room> unvisitedNeighbors = GetNeighborsDetails();
+
             if (!backtracking) {
                 this.resultRooms.add(this.currentRoom);
             }
@@ -59,33 +60,16 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
                 neighbor.visited = true;
                 this.currentPath.push(neighbor);
                 backtracking = false;
+            } else if (this.isImperfect && backtracking && deadEnd) {
+                List<Room> neighbors = this.currentRoom.GetNeighbors();
+                int index = neighbors.size() == 1 ? 0 : rand.nextInt(neighbors.size());
+
+                this.currentRoom.CreatePaths(neighbors.get(index));
+                deadEnd = false;
             }
-            else { backtracking = true; }
-//            List<Room> unvisitedNeighbors = this.currentRoom.GetNeighbors();
-//            System.out.println(this.allRooms.size() + " " + this.rooms.size());
-//            //System.out.println("n unvisited neighbor: " + unvisitedNeighbors.size() + ", current path size: " + this.currentPath.size() );
-//
-//            if (!unvisitedNeighbors.isEmpty()) {
-//                int index = unvisitedNeighbors.size() == 1 ? 0 : rand.nextInt(unvisitedNeighbors.size());
-//                //System.out.println("n unvisited neighbor: " + unvisitedNeighbors.size() + ", unvisitedNeighbor index max: " + (unvisitedNeighbors.size() - 1) + ", chosen neighbor: " + index);
-//                Room neighbor = unvisitedNeighbors.get(index);
-//
-//                this.currentPath.push(this.currentRoom);
-//                this.currentRoom.CreatePaths(neighbor);
-//
-//                this.rooms.add(this.currentRoom);
-//                this.currentRoom = neighbor;
-//                this.currentRoom.visited = true;
-//                //System.out.println("result set size: " + this.rooms.size() + ", n unvisited neighbors: " + unvisitedNeighbors.size() + ", current path n room: " + this.currentPath.size());
-//            }
-//            else if (!this.currentPath.isEmpty()) {
-//                this.currentRoom = this.currentPath.pop();
-//            }
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (Exception e) {
-                System.out.println(e);
-                // TODO: handle exception
+            else {
+                backtracking = true;
+                deadEnd = true;
             }
         }
         return this.resultRooms;
@@ -94,7 +78,6 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
 
     @Override
     public boolean MazeNotDone() {
-        //System.out.println("allRooms size: " + this.allRooms.size() + ", treatedRooms size: " + this.rooms.size());
         return this.allRooms.size() != this.resultRooms.size();
     }
 

@@ -112,8 +112,8 @@ public class Room {
         return neighbors;
     }
 
-    public static int GetMazeWidth() { return xMax; }
-    public static int GetMazeHeight() { return yMax; }
+    public static int GetMazeWidth() { return columns; }
+    public static int GetMazeHeight() { return rows; }
     public int GetId() { return this.roomId; }
     public int GetX() { return this.x; }
     public int GetY() { return this.y; }
@@ -250,12 +250,12 @@ public class Room {
             roomRegister[yId][xId] = this;
         }
         else if (xId != roomRegister[yId].length - 1) {
-            roomRegister[yId][xId] = this;
             xId++;
+            roomRegister[yId][xId] = this;
         }
         else if (yId != roomRegister.length - 1) {
-            roomRegister[yId][xId] = this;
             xId = 0; yId++;
+            roomRegister[yId][xId] = this;
         }
         this.roomIdX = xId; this.roomIdY = yId;
     }

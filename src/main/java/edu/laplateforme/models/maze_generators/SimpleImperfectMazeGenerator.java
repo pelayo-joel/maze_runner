@@ -23,7 +23,7 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
     
 
     @Override
-    public Set<Room> MazeGeneration()  throws Exception {
+    public Set<Room> MazeGeneration() {
         Random rand = new Random();
 
         for (Room room : this.allRooms) {

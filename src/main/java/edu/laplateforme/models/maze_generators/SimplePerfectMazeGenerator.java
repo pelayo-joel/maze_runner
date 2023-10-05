@@ -7,7 +7,7 @@ import edu.laplateforme.models.maze_generators.utilities.*;
 
 
 public class SimplePerfectMazeGenerator implements MazeGenerator {
-    private int mazeX, mazeY;
+    private int mazeX, mazeY, cooridorLength, currentCorridorLength;
     private Random rand = new Random();
     private List<Room> allRooms;
     private Set<Room> resultRooms, currentSet;
@@ -20,40 +20,49 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
         this.currentSet = new HashSet<>();
         this.mazeX = Room.GetMazeWidth();
         this.mazeY = Room.GetMazeHeight();
+        this.currentCorridorLength = 1;
+        this.cooridorLength = rand.nextInt(this.mazeX - 1) + 1;
     }
 
     
 
     @Override
-    public Set<Room> MazeGeneration()  throws Exception {
-        boolean firstRow = true;
-
-        for (Room room : this.allRooms) {
-            System.out.println(room.GetId());
-        }
-
-        while(MazeNotDone()) {
+    public Set<Room> MazeGeneration() {
+        for (int eastId = 1; eastId < this.allRooms.size(); eastId++) {
             Map<String, int[]> roomCardinals = this.currentRoom.GetCardinals();
-            //System.out.println("Room id: " + this.currentRoom.GetId() + ", room index: " + this.allRooms.indexOf(this.currentRoom));
-            //System.out.println(roomCardinals.get("East") != null);
-            //System.out.println(firstRow);
+            List<Room> corridorSet = new ArrayList<>(this.currentSet);
 
-            if (firstRow && roomCardinals.get("East") != null) {
-                //System.out.println("firstrow");
-                this.currentRoom.CreatePaths(this.allRooms.get(Room.roomRegister[this.currentRoom.GetIdY()][this.currentRoom.GetIdX() + 1].GetId()));
-            }
-            else if (!firstRow && roomCardinals.get("East") != null) {
-                //System.out.println("not firstrow");
-                SidewindAlgo();
-            }
-
-            if (this.currentRoom.GetId() == this.mazeX) {
-                firstRow = false;
+            if (roomCardinals.get("East") != null) {
+                if ((eastId - 1) < this.mazeX) {
+                    this.currentRoom.CreatePaths(this.allRooms.get(eastId));
+                }
+                else {
+                    SidewindAlgo(eastId);
+                }
             }
 
             this.resultRooms.add(this.currentRoom);
-            this.currentRoom = (this.currentRoom.GetId() + 1 != this.allRooms.size()) ? this.allRooms.get(this.currentRoom.GetId() + 1) : null;
+            this.currentRoom = this.allRooms.get(eastId);
         }
+//        boolean firstRow = true;
+//
+//        while(MazeNotDone()) {
+//            Map<String, int[]> roomCardinals = this.currentRoom.GetCardinals();
+//
+//            if (firstRow && roomCardinals.get("East") != null) {
+//                this.currentRoom.CreatePaths(Room.roomRegister[this.currentRoom.GetIdY()][this.currentRoom.GetIdX() + 1]));
+//            }
+//            else if (!firstRow && roomCardinals.get("East") != null) {
+//                SidewindAlgo();
+//            }
+//
+//            if (this.currentRoom.GetId() == this.mazeX) {
+//                firstRow = false;
+//            }
+//
+//            this.resultRooms.add(this.currentRoom);
+//            this.currentRoom = (this.currentRoom.GetId() + 1 != this.allRooms.size()) ? this.allRooms.get(this.currentRoom.GetId() + 1) : null;
+//        }
 
         return this.resultRooms;
     }
@@ -62,7 +71,6 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
     @Override
     public boolean MazeNotDone() {
         return this.allRooms.size() != this.resultRooms.size();
-
     }
 
     @Override
@@ -77,18 +85,21 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
     }
 
 
-    private void SidewindAlgo() {
+    private void SidewindAlgo(int eastId) {
         List<Room> corridorSet = new ArrayList<>(this.currentSet);
+        System.out.println("current corridor: " + this.currentCorridorLength + ", random corridor length: " + this.cooridorLength);
 
-        if (rand.nextBoolean()) {
-            this.currentRoom.CreatePaths(this.allRooms.get(this.currentRoom.GetId()));
-            this.currentSet.add(this.currentRoom);
-        }
-        else if (!corridorSet.isEmpty()) {
-            int index = corridorSet.size() == 1 ? 0 : rand.nextInt(corridorSet.size());
-            Room randomRoomFromSet = corridorSet.get(index);
-            randomRoomFromSet.CreatePaths(this.allRooms.get(Room.roomRegister[randomRoomFromSet.GetIdY() - 1][randomRoomFromSet.GetIdX()].GetId()));
-            this.currentSet.clear();
-        }
+//        if (this.cooridorLength != this.currentCorridorLength) {
+//            this.currentRoom.CreatePaths(this.allRooms.get(eastId));
+//            this.currentSet.add(this.currentRoom);
+//            this.currentCorridorLength++;
+//        }
+//        else {
+//            Room randomRoomFromSet = corridorSet.get(0);
+//            randomRoomFromSet.CreatePaths(Room.roomRegister[randomRoomFromSet.GetIdY() - 1][randomRoomFromSet.GetIdX()]);
+//            this.currentCorridorLength = 1;
+//            this.cooridorLength = rand.nextInt(this.mazeX - corridorSet.size());
+//            this.currentSet.clear();
+//        }
     }
 }
